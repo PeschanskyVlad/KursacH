@@ -29,3 +29,5 @@ router.get('/login', (req, res) => {
 
 
 /* POST login function. */
+
+module.exports = router;
