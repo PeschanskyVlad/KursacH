@@ -12,10 +12,15 @@
 
 <body>
   <div class='container'>
-    <h1>Welcome!</h1>
+    <h1>Welcome<%if(user){user.username} %>!</h1>
     <p>
       <a href = '/articles'>Articles</a><br>
-      <a href = '/login'>Login</a>
+      <% if (!user) { %>
+                    <a href = '/login'>Login</a>
+                <% } else { %>
+                    <a href = '/logout'>Logout</a><br>
+                    <a href = '/user_profile'>Your profile</a>
+                <% } %>
     </p>
   </div>
 </body>

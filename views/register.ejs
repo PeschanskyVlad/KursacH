@@ -17,7 +17,7 @@
 <body>
 	<div class='container'>
 		<h1>Registration</h1>
-		<form action='/register' method='POST'>
+		<form action='/register' method='POST' enctype="multipart/form-data">
 			Username:
       <br/>
 			<input type='text' name='username' />
@@ -35,7 +35,7 @@
       <input type='password' name='password2' />
     <br/>
     Load Avatar:<br />
-    <input type='file' name='avatar' />
+    <input type='file' name='avatar' accept="image/*" />
     <br />
 
     <br /><br />
@@ -45,5 +45,4 @@
 	</div>
   <script src="js/scripts.js"></script>
 </body>
-</html>
 </html>
