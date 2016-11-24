@@ -90,6 +90,12 @@ router.get('/', function(req, res, next) {
 	 res.render('main', {user : req.user});
 });
 
+router.get('/new_article', function(req, res, next) {
+	if(req.user){
+	 res.render('new_article', {user : req.user});
+ } else {res.end('Nope');}
+});
+
 
 /* GET register page. */
 router.get('/register', (req, res) => {
@@ -120,9 +126,7 @@ router.get('/login-error', (req, res) => res.render('error', {error : 'Login err
 router.get('/user_profile', (req, res) => {
 	if(req.user){
 		res.render('user_profile', {user : req.user});
-	} else {
-		res.end('Nope');
-	}
+	} else {res.end('Nope');}
 });
 
 router.post('/user_profile',(req,res) => {
