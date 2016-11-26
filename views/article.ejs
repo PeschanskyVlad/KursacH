@@ -16,6 +16,12 @@
                   <a href = '/login'>Login</a>
               <% } else { %>
                   <a href = '/user_profile'>Your profile</a>
+                  <% if (user.admin == true) { %>
+                  <form action= <%=ar.address%> method='POST'>
+                    <input type="submit" value='Delete' />
+                  </form>
+                    <%}%>
+
                   <a href = '/logout'>Logout</a>
 
               <% } %>

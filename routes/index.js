@@ -133,6 +133,23 @@ router.get('/register', (req, res) => {
   res.render('register');
 });
 
+router.post('/articles/:title', function(req,res){
+	if(req.user.admin == true){
+	var temp = '/articles/'+ req.params.title;
+	ArticleTemplate.findOneAndRemove({
+		address : temp
+	},function(err,article){
+		if(err){
+			res.send('Delete error')
+		}else{
+			res.redirect('/');
+		}
+	})
+}else{
+	res.end('Nope');
+}
+});
+
 router.get('/articles/:title', function(req,res){
 //	console.log('here');
  	var temp = '/articles/'+ req.params.title;
@@ -304,7 +321,8 @@ if(req.body.username&&req.body.email&&req.body.password&&
 		      username : req.body.username,
 		      email : req.body.email,
 		      password : hash(req.body.password),
-		      image : base64String
+		      image : base64String,
+					admin : false,
 		      });
 
 					new_user.save((err) => {
