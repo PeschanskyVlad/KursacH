@@ -7,7 +7,7 @@ var UserTemplate = require('../user_template').UserTemplate;
 router.get('/', function(req, res, next) {
   UserTemplate.find((err, users) => {
     if(!err){
-      res.send('All users: \n' + users);
+      res.json( users);
     } else {
       res.statusCode = 500;
       res.send('Server error');
@@ -40,7 +40,20 @@ router.post('/', function(req, res) {
   });
 });
 
-
+router.get('/:id', function(req, res, next) {
+  UserTemplate.findById(req.params.id, (err, user) => {
+    if(!user){
+      res.statusCode = 404;
+      res.send('Not Found');
+    }
+    if(!err){
+      res.send(user);
+    } else {
+      res.statusCode = 500;
+      res.send('Server error');
+    }
+  });
+});
 
 router.delete('/:id', (req, res) => {
     UserTemplate.findById(req.params.id, (err, user) => {

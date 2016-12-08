@@ -133,7 +133,7 @@ router.get('/register', (req, res) => {
   res.render('register');
 });
 
-router.post('/articles/:title', function(req,res){
+router.delete('/articles/:title', function(req,res){
 	if(req.user.admin == true){
 	var temp = '/articles/'+ req.params.title;
 	ArticleTemplate.findOneAndRemove({
@@ -328,7 +328,7 @@ if(req.body.username&&req.body.email&&req.body.password&&
 					new_user.save((err) => {
 						if(!err){
 
-							res.redirect('/register_success');
+							res.redirect('/');
 
 						} else {
 							console.log(err);
