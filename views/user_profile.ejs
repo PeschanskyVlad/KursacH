@@ -2,62 +2,131 @@
 <head>
   <meta charset="utf-8">
 
-  <title>Main</title>
+  <title>profile</title>
   <meta name="description" content="The HTML5 Herald">
   <meta name="author" content="SitePoint">
 
-  <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link href='/stylesheets/style.css' type="text/css" rel="stylesheet">
+
+  <script>
+
+
+    window.onload = function() {
+      var div1 = document.getElementById('logb');
+
+      var div2 = document.getElementById('log2');
+
+      var div3 = document.getElementById('logb2');
+      //alert(div2.offsetWidth);
+
+      div3.style.left = div2.offsetWidth+45;
+
+      div3.style.top = div1.offsetHeight+30;
+
+    //  var div4 = document.getElementById('1');
+
+    //  var div5 = document.getElementById('2');
+
+    //  div4.style.top = div3.offsetTop;
+
+    //  div5.style.top = div3.offsetTop;
+
+    //  div5.style.left = div3.offsetLeft+div4.offsetWidth;
+
+
+    }
+
+  </script>
 </head>
 
+
 <body>
-  <div class='container'>
-    <p>
-      <a href = '/'>Main page</a><br>
-      <a href = '/articles'>Articles</a><br>
-      <a href = '/logout'>Logout</a>
-      <br /><br />
 
-      <form action='/user_profile' method='POST' enctype="multipart/form-data">
-        <p>
-          Username : <%= user.username%>
-        </p>
+  <div>
+        <div class="logblock" id="logb">
 
-        E-mail:
-        <br/>
-        <input type='text' name='email' value = '<%= user.email%>' />
-      <br/>
-  			Password:
-        <br/>
-  			<input type='password' name='password' value = '<%user.password%>'/>
-  			<br/>
-        Repeat password:
-        <br/>
-        <input type='password' name='password2' value = '<%user.password%>'/>
-      <br/>
 
-        <br />
-        <br />
-        <% if (user.image) { %>
-                      <img src='data:image/jpg;base64,<%= user.image %>' width=120 height=120 alt="left" /><br>
-                  <% } else { %>
-                      <p>
-                          No avatar<br>
-                      </p>
-                  <% } %>
+          <ul class="nav navbar-nav navbar-right">
+            <% if (!user) { %>
+                          <li><a href = '/register'><span class="glyphicon glyphicon-user"></span> Sign in</a></li>
+                          <li><a href = '/login'><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                      <% } else { %>
+                          <li><a href = '/logout'><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                          <li><a href = '/user_profile'><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+                      <% } %>
+  </ul>
 
-        <br />
-        <br />
-        <br />
-        <br />
-      <br />
-      <input type='file' name='avatar' accept="image/*" />
-      <br />
-      <input type='submit' value='Update' />
-      <br /><br />
-    </form>
-    </p>
+       </div>
+     </div>
 
-  </div>
+  <div>
+       <div class="mainimage" id="log2">
+           <img src='/images/books.png' width=150 height=110 alt="Books"/></br></br><br>
+           <a href = '/'><p class="p1">Main page</p></a>
+
+           <a href = '/articles'><p class="p1">Article list</p></a>
+           <hr>
+         <p class="p1">  Participation</p>
+
+            <% if (!user) { %>
+       <p class="p2">Login first.</p>
+                      <% } else { %>
+                          <a href = '/new_article'><p class="p2">Create article</p></a>
+
+                      <% } %>
+           <a href = '/help'><p class="p2">Help</p></a><br>
+       </div>
+
+       <div class="profiletext" id="logb2">
+         <h1 align="center">Your profile</font></h1><br>
+        <div id="1" class="col-lg-4">
+          <div class="textA">
+         <% if (user.image) { %>
+                       <img src='data:image/jpg;base64,<%= user.image %>' class="profileimage" width=200 height=200 alt="Avatar" /><br>
+                   <% } else { %>
+                       <p>
+                        <img src='/images/avatar.png' class="profileimage" width=200 height=200 alt="Avatar" /><br>
+                       </p>
+                   <% } %>
+            <br>
+                   <p align="center">
+              <font size="15">    <%= user.username%></font>
+                   </p>
+        </div>
+        </div>
+        <div id="2" class="col-lg-8">
+          <div class="textA">
+          <p align="center">Here you can update your information</p>
+         <form action='/user_profile' method='POST' enctype="multipart/form-data">
+         E-mail:
+         <br/>
+         <input type='text' name='email' value = '<%= user.email%>' />
+       <br/><br>
+   			Password:
+         <br/>
+   			<input type='password' name='password' />
+   			<br/><br>
+         Repeat password:
+         <br/>
+         <input type='password' name='password2'/>
+       <br/>
+
+         <br />
+
+       <br />
+       <input type='file' name='avatar' align="center" style="border: none" accept="image/*" />
+       <br />
+       <input type='submit' value='Update' />
+       <br /><br />
+     </form>
+   </div>
+   </div>
+
+       </div>
+       <div>
+
 </body>
 </html>

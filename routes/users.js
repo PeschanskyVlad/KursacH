@@ -73,3 +73,41 @@ router.delete('/:id', (req, res) => {
 });
 
 module.exports = router;
+
+
+
+//вудуеу
+
+let p = new Promise((resv, rej)=>{
+					theposts.forEach((post) => {
+					users
+						.findOne({_id: post.user_id})
+						.exec((err, user)=>{
+							if(!err){
+								if(user){
+									console.log('step');
+									adverts[adverts.length] = {post : post, user : user};
+								} else {
+									console.log(err);
+									rej(err);
+									//res.render('err', {status: 500, message: err});
+								}
+							} else {
+								console.log(err);
+								rej(err);
+								//res.render('err', {status: 500, message: err});
+							}
+						});
+					});
+					console.log("resolved");
+					resv();
+				});
+
+
+p.then(()=>{
+					console.log(adverts);
+					res.render('index', {user: req.user, adverts: adverts});
+				})
+					.catch((err)=>{
+						res.render('err', {status : 500, message: "Internal server error"});
+					});

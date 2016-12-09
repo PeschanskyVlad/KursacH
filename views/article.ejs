@@ -6,43 +6,80 @@
   <meta name="description" content="The HTML5 Herald">
   <meta name="author" content="SitePoint">
 
-  <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link href='/stylesheets/style.css' type="text/css" rel="stylesheet">
+
+  <script>
+    window.onload = function() {
+      var div1 = document.getElementById('logb');
+      var div2 = document.getElementById('log2');
+      var div3 = document.getElementById('logb2');
+      div3.style.left = div2.offsetWidth+45;
+      div3.style.top = div1.offsetHeight+30;
+    }
+  </script>
+
 </head>
 
 <body>
-  <div class='container' align = "right">
-    <% if (!user) { %>
-                  <a href = '/login'>Login</a>
-              <% } else { %>
-                  <a href = '/user_profile'>Your profile</a>
-                  <% if (user.admin == true) { %>
-                  <form action= <%=ar.address%> method='POST'>
-                    <input type="submit" value='Delete' />
-                  </form>
-                    <%}%>
+  <div>
+        <div class="logblock" id="logb">
 
-                  <a href = '/logout'>Logout</a>
 
-              <% } %>
-  </div>
-<div class='container'>
-  <p>
-<h2><%=ar.aname%></h2><br>
-<%=ar.acategory%><br>
-<%=ar.asummary%><br>
-<% if (ar.image) { %>
-              <img src='data:image/jpg;base64,<%= ar.image %>' width=120 height=120 alt="left" /><br>
-          <% } else { %>
-              <p>
-                  No image<br>
-              </p>
-          <% } %>
-          <hr>
-          <%=ar.atext%><br>
+          <ul class="nav navbar-nav navbar-right">
+            <% if (!user) { %>
+                          <li><a href = '/register'><span class="glyphicon glyphicon-user"></span> Sign in</a></li>
+                          <li><a href = '/login'><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                      <% } else { %>
+                          <li><a href = '/logout'><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                          <li><a href = '/user_profile'><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+                      <% } %>
+  </ul>
 
-</p>
-</div>
+       </div>
+     </div>
+
+  <div>
+       <div class="mainimage" id="log2">
+           <img src='/images/books.png' width=150 height=110 alt="Books"/></br></br><br>
+           <a href = '/'><p class="p1">Main page</p></a>
+
+           <a href = '/articles'><p class="p1">Article list</p></a>
+           <hr>
+         <p class="p1">  Participation</p>
+
+            <% if (!user) { %>
+       <p class="p2">Login first.</p>
+                      <% } else { %>
+                          <a href = '/new_article'><p class="p2">Create article</p></a>
+
+                      <% } %>
+           <a href = '/help'><p class="p2">Help</p></a><br>
+       </div>
+
+       <div class="profiletext" id="logb2">
+
+         <p>
+         <h2><%=ar.aname%></h2><br>
+         <hr>
+         <%=ar.asummary%><br>
+         <% if (ar.image) { %>
+                       <img src='data:image/jpg;base64,<%= ar.image %>' width=120 height=120 alt="left" /><br>
+                   <% } else { %>
+                       <p>
+                           No image<br>
+                       </p>
+                   <% } %>
+                   <hr>
+                   <%=ar.atext%><br>
+
+         </p>
+
+
+       </div>
+       <div>
 
 </body>
 </html>

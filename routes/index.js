@@ -100,12 +100,23 @@ router.get('/new_article', function(req, res, next) {
 				console.log('Error.');
 			}else{
 
+				var tempArr = [];
 
 				var row='';
 				for (var i in articles) {
+
+					if(tempArr.indexOf(articles[i].acategory)==-1){
 						 row+= articles[i].acategory+',';
+					 }
+
+
+						 tempArr[i] = articles[i].acategory;
 					 };
+
+
 						 row = row.slice(0, -1);
+
+
 					res.render('new_article', {user : req.user, categorys : row});
 			}
 
@@ -118,6 +129,38 @@ router.get('/articles', function(req,res,next){
 	.exec(function(err,articles){
 		if(err){res.send('err');}else{
 
+
+			//So long function, wow
+			/*
+			var list="";
+			var tempArr = [];
+		  var ABC = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","S","Y","Z"];
+
+		 for (var c = 0; c<ABC.length ; c++){
+		 list+=  "&nbsp&nbsp&nbsp&nbsp"+ABC[c]+":<br>";
+		 	for (var i in articles) {
+
+		 if(articles[i].acategory.charAt(0).toUpperCase()==ABC[c]){
+
+		 	var temp = articles[i].acategory;
+
+		 		if(tempArr.indexOf(articles[i].acategory)==-1){
+
+		 		list+="&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp"+articles[i].acategory+":<br>";
+		 		 for (var j in articles) {
+		 			 if(articles[j].acategory == temp){
+		 			list+="&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href = "+articles[j].address+ ">"+articles[j].aname+"</a><br>";
+		 			 }
+		 			 };
+		 		}
+		 			 tempArr[i] = articles[i].acategory;
+
+		 			}
+		 		 };
+		 list+= " <hr>";
+	 }*/
+
+			//finally
 
 			res.render('articles', {user : req.user, ar : articles});
 		}

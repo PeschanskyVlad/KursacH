@@ -41,6 +41,7 @@ a {
   position: fixed;
   top: 10;
   right: 15;
+
   display: inline-block;
 
    background: #F0F8FF;
@@ -49,11 +50,85 @@ a {
    border-radius: 8px;
    box-shadow: 0 0 10px 5px rgba(221, 221, 221, 1);
  }
+
+ .maintext{
+  position: fixed;
+  right: 15;
+  overflow: auto;
+  background: #F0F8FF;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 0 10px 5px rgba(221, 221, 221, 1);
+ }
+
+ .profiletext{
+   position: fixed;
+   overflow: auto;
+   right: 15;
+   background: #F0F8FF;
+   border-radius: 8px;
+   box-shadow: 0 0 10px 5px rgba(221, 221, 221, 1);
+   padding: 30px;
+   font-size: 15;
+
+ }
+
+ input{
+     border-radius: 8px;
+       border: 1px solid #666;
+ }
+
+hr{
+  color: #0000CD;
+  size: 3px;
+}
+ .p1 {
+   text-indent: 10px; /* Отступ первой строки в пикселах */
+  }
+  .p2 {
+    text-indent: 20px; /* Отступ первой строки в пикселах */
+   }
+
+   .p3 {
+     text-indent: 40px; /* Отступ первой строки в пикселах */
+    }
+
+   .articleslist{
+     position: fixed;
+     right: 15;
+      overflow: auto;
+     background: #F0F8FF;
+     padding: 20px;
+     border-radius: 8px;
+     box-shadow: 0 0 10px 5px rgba(221, 221, 221, 1);
+   }
+
  .mainimage{
    position: fixed;
-   top: 5;
+   top: 10;
    left: 15;
+   border-radius: 8px;
+   background: #F0F8FF;
+   padding: 8px 10px;
 
+   height: 95%;
+
+
+   box-shadow: 0 0 10px 5px rgba(221, 221, 221, 1);
+   float: left;
+ }
+
+ input[type=file] {
+    margin: 0 auto;
+}
+
+ .textA{
+   text-align: center;
+ }
+
+ .profileimage{
+  border: 4px solid #5F9EA0;
+  box-shadow: 0 0 10px 5px rgba(221, 221, 221, 1);
  }
 
  .round {
