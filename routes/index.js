@@ -8,6 +8,8 @@ var UserTemplate = require('../user_template').UserTemplate;
 var ArticleTemplate = require('../article_template').ArticleTemplate;
 
 var mongo_db = 'mongodb://localhost/kursach';
+var csrf = require('csurf');
+
 
 mongoose.connect(mongo_db);
 
@@ -29,13 +31,14 @@ router.use(cookieParser());
 router.use(session({
 	secret: sessionSecret,
 	resave: false,
-	saveUninitialized: true
+	saveUninitialized: false
 }));
 
 
 router.use(passport.initialize());
 router.use(passport.session());
 
+router.use(csrf());
 
 
 passport.serializeUser(function(user, done) {
@@ -213,7 +216,7 @@ router.get('/articles/:title', function(req,res){
 
 /* GET login page. */
 router.get('/login', (req, res) => {
-  res.render('login');
+  res.render('login',{csrfToken : req.csrfToken()});
 });
 
 /* GET register_success page. */
