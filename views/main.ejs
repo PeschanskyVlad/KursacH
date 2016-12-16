@@ -10,17 +10,12 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script src="/javascripts/main.js"></script>
+
 <link href='/stylesheets/style.css' type="text/css" rel="stylesheet">
 
-<script>
-  window.onload = function() {
-    var div1 = document.getElementById('logb');
-    var div2 = document.getElementById('log2');
-    var div3 = document.getElementById('logb2');
-    div3.style.left = div2.offsetWidth+45;
-    div3.style.top = div1.offsetHeight+30;
-  }
-</script>
+<script src="/javascripts/onstart.js"></script>
 
 </head>
 
@@ -58,6 +53,18 @@
 
                     <% } %>
          <a href = '/help'><p class="p2">Help</p></a><br>
+
+
+
+    Search:<br>
+    <input type="search"   id="search">
+
+       <div id="results">
+       </div>
+
+
+
+
      </div>
 
      <div class="maintext" id="logb2">
@@ -66,6 +73,6 @@
      <div>
 
 
-
+<script src="/javascripts/search.js"></script>
 </body>
 </html>

@@ -120,7 +120,7 @@ router.get('/new_article', function(req, res, next) {
 						 row = row.slice(0, -1);
 
 
-					res.render('new_article', {user : req.user, categorys : row});
+					res.render('new_article', {user : req.user, categorys : row, csrfToken : req.csrfToken()});
 			}
 
 	})
@@ -176,7 +176,7 @@ router.get('/articles', function(req,res,next){
 
 /* GET register page. */
 router.get('/register', (req, res) => {
-  res.render('register');
+  res.render('register',{csrfToken : req.csrfToken() , errorMessage : 0 });
 });
 
 router.delete('/articles/:title', function(req,res){
@@ -195,6 +195,18 @@ router.delete('/articles/:title', function(req,res){
 	res.end('Nope');
 }
 });
+
+
+
+
+router.get('/searching', function(req, res){
+ // input value from search
+ var val = req.query.search;
+ console.log(val);
+// testing the route
+// res.send("WHEEE");
+});
+
 
 router.get('/articles/:title', function(req,res){
 //	console.log('here');
@@ -216,7 +228,7 @@ router.get('/articles/:title', function(req,res){
 
 /* GET login page. */
 router.get('/login', (req, res) => {
-  res.render('login',{csrfToken : req.csrfToken()});
+  res.render('login',{csrfToken : req.csrfToken() , errorMessage : 0});
 });
 
 /* GET register_success page. */
@@ -245,12 +257,15 @@ router.post('/login',
 	passport.authenticate('local', { failureRedirect: '/login-error' }),
   (req, res) => res.redirect('/'));
 
-router.get('/login-error', (req, res) => res.render('error', {error : 'Login error'}));
+router.get('/login-error', (req, res) => {
+  res.render('login',{csrfToken : req.csrfToken() , errorMessage : 1});
+
+});
 
 
 router.get('/user_profile', (req, res) => {
 	if(req.user){
-		res.render('user_profile', {user : req.user});
+		res.render('user_profile', {user : req.user , csrfToken : req.csrfToken()});
 	} else {res.end('Nope');}
 });
 
@@ -295,13 +310,30 @@ router.post('/user_profile',(req,res) => {
 });
 
 
+router.get('/search', function(req, res){
+	 console.log(req.query.search);
+
+	 ArticleTemplate.find({"aname" : req.query.search }).exec((err, articles) => {
+		 console.log('Here2');
+		 if(!err) {
+			 console.log('Yep');
+			 	res.send(JSON.stringify(articles));
+
+		 } else {
+			  console.log('Nope');
+			 res.send(JSON.stringify(err));
+		 }
+	 });
+});
+
+
 
 router.post('/new_article',(req,res) =>{
 
-	console.log('Here');
+	//console.log('Here');
 
 	if(req.body.atitle&&req.body.acategory){
-			console.log('Here2');
+		//	console.log('Here2');
 
 			ArticleTemplate.findOne({aname : req.body.atitle},function(err,article){
 			if(err) return next(err);
@@ -350,6 +382,8 @@ router.post('/new_article',(req,res) =>{
 
 /* POST register. */
 router.post('/register', (req, res) => {
+
+
 if(req.body.username&&req.body.email&&req.body.password&&
 	req.body.password2&&req.body.password === req.body.password2){
 
@@ -360,7 +394,11 @@ if(req.body.username&&req.body.email&&req.body.password&&
 			res.end("Such username exists " + JSON.stringify(user));
 			}else{
 
+
 				var avaObj = req.files.avatar;
+
+
+
 			  var base64String = avaObj.data.toString('base64');
 
 		    var new_user = new UserTemplate({
@@ -392,7 +430,7 @@ if(req.body.username&&req.body.email&&req.body.password&&
 		})
 
     } else {
-      res.render('error', { error : 'Invalide data. Please fill fields correctly.'});
+      res.render('register',{csrfToken : req.csrfToken() , errorMessage : 1 });
     }
 });
 

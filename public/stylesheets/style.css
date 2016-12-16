@@ -20,6 +20,14 @@ a {
   overflow: auto;
   }
 
+  .parent1{
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    overflow: auto;
+  }
+
  .block1 {
   margin-top: 15%;
   border-radius: 8px;
@@ -73,10 +81,7 @@ a {
 
  }
 
- input{
-     border-radius: 8px;
-       border: 1px solid #666;
- }
+
 
 hr{
   color: #0000CD;
@@ -117,10 +122,11 @@ hr{
    box-shadow: 0 0 10px 5px rgba(221, 221, 221, 1);
    float: left;
  }
+ .er{
+   color: red;
+ }
 
- input[type=file] {
-    margin: 0 auto;
-}
+
 
  .textA{
    text-align: center;

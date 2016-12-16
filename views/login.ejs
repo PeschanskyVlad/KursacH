@@ -9,8 +9,8 @@
   <title>Login</title>
 
 <link href='/stylesheets/style.css' type="text/css" rel="stylesheet">
-
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </head>
 
 
@@ -21,34 +21,47 @@
 		<h1 align="center">Login</h1>
 </br>
     <img src='/images/avatar.png' class="round" width=80 height=80 alt="Avatar" /><br>
-
-		<form action='/login' class="input-group" method='POST'>
+<div class="parent1">
+		<form action='/login' class="input-group" method='POST' >
 			Username:
 
       <br/>
-			<input type='text' class="form-control" name='username' />
+      <div class="form-group has-feedback usernameBlock">
+			<input type='text'  name='username' class="form-control" id="username" aria-describedby="inputSuccess2Status"/>
+      </div>
       <br/>
       <br/>
 			Password:
 
       <br/>
-			<input type='password' class="form-control" name='password' />
-			<br/>
+      <div class="form-group has-feedback passwordBlock">
+			<input type='password'  name='password' class="form-control" id="password" aria-describedby="inputSuccess2Status" />
+    </div>
       <br/>
+      <br/>
+      <%if(errorMessage == 0){%>
+      <br/>
+        <%}%>
+      <%if(errorMessage == 1){%>
+      <div class="er">Incorrect login or password.</div>
+      <%}%>
 
     <br /><br />
     <input type="hidden" name="_csrf" value="<%=csrfToken%>">
 			<input type="submit" class="but" value='Login' />
 
 
-
-
     <a href="/register">    Registration</a>
 
 		</form>
+</div>
+
 	</div>
 </div>
 
-  <script src="js/scripts.js"></script>
+
+<script src="/javascripts/login.js"></script>
+
+
 </body>
 </html>

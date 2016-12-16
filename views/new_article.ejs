@@ -10,17 +10,12 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
   <link href='/stylesheets/style.css' type="text/css" rel="stylesheet">
 
-  <script>
-    window.onload = function() {
-      var div1 = document.getElementById('logb');
-      var div2 = document.getElementById('log2');
-      var div3 = document.getElementById('logb2');
-      div3.style.left = div2.offsetWidth+45;
-      div3.style.top = div1.offsetHeight+30;
-    }
-  </script>
+<script src="/javascripts/onstart.js"></script>
 
 </head>
 
@@ -61,27 +56,36 @@
        </div>
 
 
-       <div class="profiletext" id="logb2">
+       <div class="profiletext" id="logb2" style="height : 88%;">
          <h1 align="center">Welcome <%= user.username%>!</h1>
           <p align="center">Thank you, for assistance in site development.</p>
-    <form action='/new_article' method='POST' enctype="multipart/form-data">
+          <hr>
+    <form action='/new_article' method='POST' enctype="multipart/form-data" class="input-group">
       Title:
       <br/>
-      <input type='text' name='atitle' />
+      <div class="form-group has-feedback atitleBlock">
+      <input type='text' name='atitle' class="form-control" id="atitle" aria-describedby="inputSuccess2Status"/>
+    </div>
       <br/><br>
       Existing categories:<br/>
       <%=categorys%><br><br>
       Category:
       <br/>
-      <input type='text' name='acategory' />
+      <div class="form-group has-feedback acategoryBlock">
+      <input type='text' name='acategory' class="form-control" id="acategory" aria-describedby="inputSuccess2Status"/>
+    </div>
       <br/><br>
       Article summary:
       <br/>
-      <textarea rows="5" cols="100" name="asummary"></textarea>
+      <div class="form-group has-feedback asummaryBlock">
+      <textarea rows="5" cols="100" style="resize: none; " name="asummary" class="form-control" id="asummary" aria-describedby="inputSuccess2Status"></textarea>
+    </div>
       <br/><br>
       Article text:
       <br/>
-      <textarea rows="10" cols="100" name="atext"></textarea>
+      <div class="form-group has-feedback atextBlock">
+      <textarea rows="10" cols="100" name="atext" style="resize: none; " class="form-control" id="atext" aria-describedby="inputSuccess2Status"></textarea>
+    </div>
       <br/><br>
 
     Article image:<br />
@@ -90,10 +94,11 @@
 
     <br /><br />
 
+      <input type="hidden" name="_csrf" value="<%=csrfToken%>">
       <input type="submit" value='Create article.' />
     </form>
        </div>
        <div>
-
+<script src="/javascripts/login.js"></script>
 </body>
 </html>
