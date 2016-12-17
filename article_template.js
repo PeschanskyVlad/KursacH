@@ -23,6 +23,13 @@ var Article = new Schema({
       type : String,
       required : true,
     },
+    adate : {
+      type : Date,
+      default : Date.now
+    },
+    autor : {
+      type : String
+    },
     atext : {
       type : String,
       required : true,

@@ -81,10 +81,21 @@ a {
 
  }
 
+ .profiletext2{
+
+   text-align:  center;
+   background: #DCDCDC;
+   border-radius: 8px;
+   box-shadow: 0 0 10px 5px rgba(221, 221, 221, 1);
+   padding: 30px;
+   font-size: 15;
+
+ }
+
 
 
 hr{
-  color: #0000CD;
+  color: #000000;
   size: 3px;
 }
  .p1 {

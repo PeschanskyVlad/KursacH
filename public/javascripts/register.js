@@ -11,7 +11,7 @@ $(document).ready(function(){
     var username = $("#username").val();
     var email = $("#email").val();
     var password = $("#password").val();
-    var password = $("#password2").val();
+    var password2 = $("#password2").val();
 
     if(username == "") {
       $("#username").parent().removeClass("has-success").addClass("has-error");
@@ -28,12 +28,12 @@ $(document).ready(function(){
     if(email == "") {
       $("#email").parent().removeClass("has-success").addClass("has-error");
       $(".emailBlock").append("<span class='glyphicon glyphicon-remove form-control-feedback' aria-hidden='true'></span>");
-      $(".email .glyphicon-ok").remove();
+      $(".emailBlock .glyphicon-ok").remove();
       validEmail = false;
     } else {
       $("#email").parent().removeClass("has-error").addClass("has-success");
-      $(".email").append("<span class='glyphicon glyphicon-ok form-control-feedback' aria-hidden='true'></span>");
-      $(".email .glyphicon-remove").remove();
+      $(".emailBlock").append("<span class='glyphicon glyphicon-ok form-control-feedback' aria-hidden='true'></span>");
+      $(".emailBlock .glyphicon-remove").remove();
       validEmail = true;
     }
 

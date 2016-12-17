@@ -13,7 +13,10 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
   <link href='/stylesheets/style.css' type="text/css" rel="stylesheet">
+  <script type="text/javascript" src="javascripts/bootstrap-filestyle.min.js"> </script>
 
 <script src="/javascripts/onstart.js"></script>
 
@@ -29,8 +32,9 @@
                           <li><a href = '/register'><span class="glyphicon glyphicon-user"></span> Sign in</a></li>
                           <li><a href = '/login'><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                       <% } else { %>
-                          <li><a href = '/logout'><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-                          <li><a href = '/user_profile'><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+                        <li><a href = '/logout' style="pointer-events: none;  cursor: default;  color: #000000;"><%= user.username%></a></li>
+                        <li><a href = '/logout'><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                        <li><a href = '/user_profile'><span class="glyphicon glyphicon-user"></span> Profile</a></li>
                       <% } %>
   </ul>
 
@@ -52,15 +56,29 @@
                           <a href = '/new_article'><p class="p2">Create article</p></a>
 
                       <% } %>
-           <a href = '/help'><p class="p2">Help</p></a><br>
+
+           Search:<br>
+
+           <form action='/search' class="input-group" method='GET' id="search_form">
+             <div class="input-group">
+             <input type="text" placeholder="Search" class="form-control input-sm" name="search"  id="search">
+               <div class="input-group-btn">
+                 <button class="btn btn-default btn-sm" type="submit">
+                   <i class="glyphicon glyphicon-search"></i>
+                 </button>
+                 </div>
+               </div>
+               <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+
+             </form>
        </div>
 
 
-       <div class="profiletext" id="logb2" style="height : 88%;">
+       <div class="profiletext" id="logb2" style="height : 87%;">
          <h1 align="center">Welcome <%= user.username%>!</h1>
           <p align="center">Thank you, for assistance in site development.</p>
           <hr>
-    <form action='/new_article' method='POST' enctype="multipart/form-data" class="input-group">
+    <form action='/new_article' method='POST' enctype="multipart/form-data" class="input-group" id="newa">
       Title:
       <br/>
       <div class="form-group has-feedback atitleBlock">
@@ -80,25 +98,40 @@
       <div class="form-group has-feedback asummaryBlock">
       <textarea rows="5" cols="100" style="resize: none; " name="asummary" class="form-control" id="asummary" aria-describedby="inputSuccess2Status"></textarea>
     </div>
-      <br/><br>
+      </br>
+      </br>
       Article text:
       <br/>
       <div class="form-group has-feedback atextBlock">
       <textarea rows="10" cols="100" name="atext" style="resize: none; " class="form-control" id="atext" aria-describedby="inputSuccess2Status"></textarea>
     </div>
-      <br/><br>
+  </br>
+  </br>
 
     Article image:<br />
-    <input type='file' name='image'  style="border: none; margin: 0;"  accept="image/*" />
+
+
+    <input type="file"  name='image' class="filestyle" data-buttonBefore="true"  accept="image/*">
     <br />
 
-    <br /><br />
+    <%if(errorMessage == 0){%>
+    <br/>
+      <%}%>
+    <%if(errorMessage == 1){%>
+    <div class="er">Such name exists.</div>
+    <%}%>
+    <%if(errorMessage == 2){%>
+    <div class="er">Invalide data.</div>
+    <%}%>
+
+    <br />
 
       <input type="hidden" name="_csrf" value="<%=csrfToken%>">
       <input type="submit" value='Create article.' />
     </form>
        </div>
        <div>
-<script src="/javascripts/login.js"></script>
+<script src="/javascripts/new_article.js"></script>
+<script src="/javascripts/check.js"></script>
 </body>
 </html>

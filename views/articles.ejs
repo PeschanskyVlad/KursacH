@@ -25,8 +25,9 @@
                           <li><a href = '/register'><span class="glyphicon glyphicon-user"></span> Sign in</a></li>
                           <li><a href = '/login'><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                       <% } else { %>
-                          <li><a href = '/logout'><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-                          <li><a href = '/user_profile'><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+                        <li><a href = '/logout' style="pointer-events: none;  cursor: default;  color: #000000;"><%= user.username%></a></li>
+                        <li><a href = '/logout'><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                        <li><a href = '/user_profile'><span class="glyphicon glyphicon-user"></span> Profile</a></li>
                       <% } %>
   </ul>
 
@@ -48,10 +49,24 @@
                           <a href = '/new_article'><p class="p2">Create article</p></a>
 
                       <% } %>
-           <a href = '/help'><p class="p2">Help</p></a><br>
+
+           Search:<br>
+
+           <form action='/search' class="input-group" method='GET' id="search_form">
+             <div class="input-group">
+             <input type="text" placeholder="Search" class="form-control input-sm" name="search"  id="search">
+               <div class="input-group-btn">
+                 <button class="btn btn-default btn-sm" type="submit">
+                   <i class="glyphicon glyphicon-search"></i>
+                 </button>
+                 </div>
+               </div>
+               <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+
+             </form>
        </div>
 
-       <div class="articleslist" id="logb2" style="height : 85%;">
+       <div class="articleslist" id="logb2" style="height : 87%;">
 
     <h1 align="center">All articles here!</h1><br><br>
 
@@ -88,6 +103,6 @@
 
 
        </div>
-
+<script src="/javascripts/check.js"></script>
 </body>
 </html>

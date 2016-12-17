@@ -9,7 +9,11 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
   <link href='/stylesheets/style.css' type="text/css" rel="stylesheet">
+  <script type="text/javascript" src="javascripts/bootstrap-filestyle.min.js"> </script>
 
   <script>
 
@@ -54,8 +58,9 @@
                           <li><a href = '/register'><span class="glyphicon glyphicon-user"></span> Sign in</a></li>
                           <li><a href = '/login'><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                       <% } else { %>
-                          <li><a href = '/logout'><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-                          <li><a href = '/user_profile'><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+                        <li><a href = '/logout' style="pointer-events: none;  cursor: default;  color: #000000;"><%= user.username%></a></li>
+                        <li><a href = '/logout'><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                        <li><a href = '/user_profile'><span class="glyphicon glyphicon-user"></span> Profile</a></li>
                       <% } %>
   </ul>
 
@@ -77,7 +82,21 @@
                           <a href = '/new_article'><p class="p2">Create article</p></a>
 
                       <% } %>
-           <a href = '/help'><p class="p2">Help</p></a><br>
+
+          Search:<br>
+
+          <form action='/search' class="input-group" method='GET' id="search_form">
+            <div class="input-group">
+            <input type="text" placeholder="Search" class="form-control input-sm" name="search"  id="search">
+              <div class="input-group-btn">
+                <button class="btn btn-default btn-sm" type="submit">
+                  <i class="glyphicon glyphicon-search"></i>
+                </button>
+                </div>
+              </div>
+              <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+
+            </form>
        </div>
 
        <div class="profiletext" id="logb2">
@@ -97,28 +116,43 @@
                    </p>
         </div>
         </div>
-        <div id="2" class="col-lg-8">
+        <div id="2" class="col-lg-4">
           <div class="textA">
-          <p align="center">Here you can update your information</p>
-         <form action='/user_profile' method='POST' enctype="multipart/form-data">
+          <p align="">Here you can update your information</p>
+         <form action='/user_profile' method='POST' enctype="multipart/form-data" class="input-group" id="uProf">
          E-mail:
          <br/>
-         <input type='text' name='email' value = '<%= user.email%>' />
+         <div class="form-group has-feedback emailBlock">
+
+
+         <input type='text' name='email' class="form-control" id="email" value = '<%= user.email%>' aria-describedby="inputSuccess2Status"/>
+       </div>
        <br/><br>
    			Password:
          <br/>
-   			<input type='password' name='password' />
+         <div class="form-group has-feedback passwordBlock">
+
+
+         <input type='password' name='password' class="form-control" id="password"  aria-describedby="inputSuccess2Status"/>
+       </div>
+
+
    			<br/><br>
          Repeat password:
          <br/>
-         <input type='password' name='password2'/>
+         <div class="form-group has-feedback password2Block">
+         <input type='password' name='password2' class="form-control" id="password2"  aria-describedby="inputSuccess2Status"/>
+       </div>
        <br/>
 
          <br />
 
        <br />
-       <input type='file' name='avatar' align="center" style="border: none" accept="image/*" />
+       New avatar:
+       <input type="file"  name='avatar' class="filestyle" data-buttonBefore="true"  accept="image/*">
+
        <br />
+       <input type="hidden" name="_csrf" value="<%=csrfToken%>">
        <input type='submit' value='Update' />
        <br /><br />
      </form>
@@ -127,6 +161,7 @@
 
        </div>
        <div>
-
+<script src="/javascripts/check.js"></script>
+<script src="/javascripts/user.js"></script>
 </body>
 </html>

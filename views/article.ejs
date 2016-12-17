@@ -25,8 +25,9 @@
                           <li><a href = '/register'><span class="glyphicon glyphicon-user"></span> Sign in</a></li>
                           <li><a href = '/login'><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                       <% } else { %>
-                          <li><a href = '/logout'><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-                          <li><a href = '/user_profile'><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+                        <li><a href = '/logout' style="pointer-events: none;  cursor: default;  color: #000000;"><%= user.username%></a></li>
+                        <li><a href = '/logout'><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                        <li><a href = '/user_profile'><span class="glyphicon glyphicon-user"></span> Profile</a></li>
                       <% } %>
   </ul>
 
@@ -46,32 +47,71 @@
        <p class="p2">Login first.</p>
                       <% } else { %>
                           <a href = '/new_article'><p class="p2">Create article</p></a>
+                          <a href = '/update_article<%=ar.address%>'><p class="p2">Update article</p></a>
 
                       <% } %>
-           <a href = '/help'><p class="p2">Help</p></a><br>
+
+
+
+                 <% if (user&&user.admin == true) { %>
+                  <form  class="input-group" action= <%=ar.address%> method='POST'>
+                    <input type="submit" value='Delete' />
+                    <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                  </form>
+                   <%}%>
+
+
+           Search:<br>
+
+           <form action='/search' class="input-group" method='GET' id="search_form">
+             <div class="input-group">
+             <input type="text" placeholder="Search" class="form-control input-sm" name="search"  id="search">
+               <div class="input-group-btn">
+                 <button class="btn btn-default btn-sm" type="submit">
+                   <i class="glyphicon glyphicon-search"></i>
+                 </button>
+                 </div>
+               </div>
+               <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+
+             </form>
+
        </div>
 
        <div class="profiletext" id="logb2">
-
          <p>
-         <h2><%=ar.aname%></h2><br>
+         <h2 align = center><%=ar.aname%></h2><br>
          <hr>
-         <%=ar.asummary%><br>
-         <% if (ar.image) { %>
-                       <img src='data:image/jpg;base64,<%= ar.image %>' width=120 height=120 alt="left" /><br>
-                   <% } else { %>
-                       <p>
-                           No image<br>
-                       </p>
-                   <% } %>
-                   <hr>
-                   <%=ar.atext%><br>
 
-         </p>
+<div id="1"  class="col-lg-8">
+  <div style = "">
+  <%=ar.asummary%><br>
+</div >
+</div>
+
+<div id="2" style = "text-align : center; " class="col-lg-4">
+  <% if (ar.image) { %>
+                <img src='data:image/jpg;base64,<%= ar.image %>' class="profileimage" width=200 height=240 alt="left" /><br>
+            <% } else { %>
+                <p>
+                  <img src='/images/null.gif' class="profileimage"  width=120 height=120 alt="left" /><br>
+                </p>
+            <% } %>
+</div>
+
+
+        &nbsp<br>
+        &nbsp<br>
+        &nbsp<br>
+        <div style="container">
+                   <hr/>
+                   <%=ar.atext%><br>
+</div>
+
 
 
        </div>
-       <div>
 
+<script src="/javascripts/check.js"></script>
 </body>
 </html>

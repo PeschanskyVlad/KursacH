@@ -1,3 +1,5 @@
+
+
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -10,6 +12,10 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+  <script href="../node_modules/ejs/ejs.js"></script>
+
 
 <script src="/javascripts/main.js"></script>
 
@@ -29,6 +35,7 @@
                         <li><a href = '/register'><span class="glyphicon glyphicon-user"></span> Sign in</a></li>
                         <li><a href = '/login'><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                     <% } else { %>
+                        <li><a href = '/logout' style="pointer-events: none;  cursor: default;  color: #000000;"><%= user.username%></a></li>
                         <li><a href = '/logout'><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                         <li><a href = '/user_profile'><span class="glyphicon glyphicon-user"></span> Profile</a></li>
                     <% } %>
@@ -50,29 +57,57 @@
      <p class="p2">Login first.</p>
                     <% } else { %>
                         <a href = '/new_article'><p class="p2">Create article</p></a>
-
                     <% } %>
-         <a href = '/help'><p class="p2">Help</p></a><br>
 
 
 
-    Search:<br>
-    <input type="search"   id="search">
 
-       <div id="results">
-       </div>
+
+             Search:<br>
+
+             <form action='/search' class="input-group" method='GET' id="search_form">
+               <div class="input-group">
+               <input type="text" placeholder="Search" class="form-control input-sm" name="search"  id="search">
+
+
+                   <button class="btn btn-default btn-sm" type="submit">
+                     <i class="glyphicon glyphicon-search"></i>
+                   </button>
+
+
+
+
+                 </div>
+                 <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+
+               </form>
 
 
 
 
      </div>
 
-     <div class="maintext" id="logb2">
-       Text
-     </div>
-     <div>
+     <div class="profiletext" id="logb2" style="height : 87%;">
+       <h3 align="center">Welcome, user!</h3>
+       <br>
+       <br>
+       <br>
+      <div class="profiletext2">
+
+       <h3 align="">Kursachepedia main page</h3>
+       Kursachepedia - information platform, where users can try to find material <br>
+       of interest to them or assist to develop the project adding new articles.
+       <br>Remember that only you and administrator can edit yours materials .
+        <br>
+        <br>
+        <br>
+        <br>
+      <img src='/images/cat.png' class="round" width=600 height=270 alt="cat" /><br>
+
+        </div>
+    </div>
 
 
 <script src="/javascripts/search.js"></script>
+<script src="/javascripts/check.js"></script>
 </body>
-</html>

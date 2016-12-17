@@ -7,7 +7,9 @@ var crypto = require('crypto');
 var UserTemplate = require('../user_template').UserTemplate;
 var ArticleTemplate = require('../article_template').ArticleTemplate;
 
-var mongo_db = 'mongodb://localhost/kursach';
+//var mongo_db = 'mongodb://localhost/kursach';
+
+var mongo_db = 'mongodb://SanD:jhfrek1998@ds111748.mlab.com:11748/kursach';
 var csrf = require('csurf');
 
 
@@ -91,7 +93,7 @@ function hash(pass){
 /* GET home page. */
 
 router.get('/', function(req, res, next) {
-	 res.render('main', {user : req.user});
+	 res.render('main', {user : req.user , csrfToken : req.csrfToken()});
 });
 
 router.get('/new_article', function(req, res, next) {
@@ -120,7 +122,7 @@ router.get('/new_article', function(req, res, next) {
 						 row = row.slice(0, -1);
 
 
-					res.render('new_article', {user : req.user, categorys : row, csrfToken : req.csrfToken()});
+					res.render('new_article', {user : req.user, categorys : row, csrfToken : req.csrfToken(), errorMessage:0});
 			}
 
 	})
@@ -165,7 +167,7 @@ router.get('/articles', function(req,res,next){
 
 			//finally
 
-			res.render('articles', {user : req.user, ar : articles});
+			res.render('articles', {csrfToken : req.csrfToken() , user : req.user, ar : articles});
 		}
 
 	})
@@ -179,7 +181,8 @@ router.get('/register', (req, res) => {
   res.render('register',{csrfToken : req.csrfToken() , errorMessage : 0 });
 });
 
-router.delete('/articles/:title', function(req,res){
+
+router.post('/articles/:title', function(req,res){
 	if(req.user.admin == true){
 	var temp = '/articles/'+ req.params.title;
 	ArticleTemplate.findOneAndRemove({
@@ -198,18 +201,34 @@ router.delete('/articles/:title', function(req,res){
 
 
 
+router.get('/update_article/articles/:title', function(req,res){
+//	console.log('hereU');
 
-router.get('/searching', function(req, res){
- // input value from search
- var val = req.query.search;
- console.log(val);
-// testing the route
-// res.send("WHEEE");
-});
+ 	var temp = '/articles/'+ req.params.title;
+//	console.log(temp);
+//	console.log(temp);
+	ArticleTemplate.findOne({
+		address : temp
+	})
+	.exec(function(err,article){
+		if(err){res.send('err occured');}
+		if(article){
+			if(req.user.username == article.autor||req.user.admin==true){
+			//console.log(article);
+			res.render('update_article', {csrfToken : req.csrfToken() , user : req.user, ar : article});
+		} else {res.end('Nope');}
+		}else{
+			res.send('Not found');
+		}
+	})
+
+
+
+})
 
 
 router.get('/articles/:title', function(req,res){
-//	console.log('here');
+	console.log('here');
  	var temp = '/articles/'+ req.params.title;
 	console.log(temp);
 	ArticleTemplate.findOne({
@@ -218,8 +237,8 @@ router.get('/articles/:title', function(req,res){
 	.exec(function(err,article){
 		if(err){res.send('err occured');}
 		if(article){
-			console.log(article);
-			res.render('article', {user : req.user,ar : article});
+			//console.log(article);
+			res.render('article', {csrfToken : req.csrfToken() , user : req.user, ar : article});
 		}else{
 			res.send('Not found');
 		}
@@ -236,16 +255,7 @@ router.get('/register_success', (req, res) => {
   res.render('register_success');
 });
 
-/* GET new article page.
-Only for registered users*/
-/*router.get('/new_article', (req, res) => {
-	if(req.user){
-  res.render('new_article');
-	} else {res.end('Nope');}
-});*/
 
-/* GET logout.
-Only for registered users*/
 router.get('/logout', (req, res) => {
 	if(req.user){req.logout();
 	res.redirect('/');
@@ -277,7 +287,47 @@ router.get('/article_success', (req, res) => {
 
 
 
-/*POST ubdate profile.*/
+router.post('/update_article/articles/:title',(req,res) =>{
+
+var temp = '/articles/'+ req.params.title;
+//console.log("Update!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111");
+
+//console.log(req.body.atitle);
+//console.log(req.body.acategory);
+//console.log(req.body.asummary);
+//console.log(req.body.atext);
+
+	if(req.body.acategory){
+
+		var aObj = req.files.image;
+		var base64String = aObj.data.toString('base64');
+	//	if (!base64String) base64String=req.user.image;
+
+		ArticleTemplate.findOneAndUpdate({address : temp},{
+					$set:{
+						acategory : req.body.acategory,
+						asummary : req.body.asummary,
+						atext : req.body.atext,
+						//image : base64String
+
+					}},
+					{new : true},
+						function(err,newPost){
+							if(err){
+								console.log('Update error!');
+							}else{
+								console.log('Update success!');
+								res.redirect(temp);
+							}
+						}
+					)
+		}else{
+			res.redirect('/update_article'+ temp);
+		}
+});
+
+
+/*POST update profile.*/
 router.post('/user_profile',(req,res) => {
 	if(req.body.email&&req.body.password&&
 		req.body.password2&&req.body.password === req.body.password2){
@@ -295,7 +345,7 @@ router.post('/user_profile',(req,res) => {
 				      image : base64String
 						}},
 						{new : true},
-							function(err,newBook){
+							function(err,newUser){
 								if(err){
 									console.log('Update error!');
 								}else{
@@ -311,19 +361,38 @@ router.post('/user_profile',(req,res) => {
 
 
 router.get('/search', function(req, res){
-	 console.log(req.query.search);
 
-	 ArticleTemplate.find({"aname" : req.query.search }).exec((err, articles) => {
-		 console.log('Here2');
+	 ArticleTemplate.find({"aname" : new RegExp(req.query.search, 'i')}).exec((err, articles) => {
 		 if(!err) {
-			 console.log('Yep');
-			 	res.send(JSON.stringify(articles));
-
+			 res.render('search',{user : req.user , articles : articles , csrfToken : req.csrfToken()})
 		 } else {
-			  console.log('Nope');
-			 res.send(JSON.stringify(err));
+			res.render('error',{error : '500: server error'})
 		 }
-	 });
+});
+});
+
+router.get('/searching', function(req, res){
+
+
+
+		 ArticleTemplate.find({"aname" :  new RegExp(req.query.search, 'i') }).exec((err, articles) => {
+			 console.log('Here2');
+			 if(!err) {
+				 console.log('Yep');
+				 	res.send(JSON.stringify(articles));
+
+			 } else {
+				  console.log('Nope');
+				 res.send(JSON.stringify(err));
+			 }
+	});
+});
+
+
+
+router.get('/about', function(req, res){
+
+	   res.render('about',{user : req.user , csrfToken : req.csrfToken()});
 });
 
 
@@ -338,7 +407,7 @@ router.post('/new_article',(req,res) =>{
 			ArticleTemplate.findOne({aname : req.body.atitle},function(err,article){
 			if(err) return next(err);
 			if(article){
-			res.end("Such article title exists");
+			res.redirect('/new_article', {errorMessage : 1});
 		}else{
 
 			var aObj = req.files.image;
@@ -357,12 +426,13 @@ router.post('/new_article',(req,res) =>{
 				atext :  req.body.atext,
 				arating : 0,
 				image : base64String,
+				autor : req.user.username,
 				});
 
 				new_article.save((err) => {
 					if(!err){
 
-						res.redirect('/article_success');
+						res.redirect('/');
 
 					} else {
 						console.log(err);
@@ -376,7 +446,7 @@ router.post('/new_article',(req,res) =>{
 		}
 			})
 		}else{
-			res.redirect('/new_article');
+			res.redirect('/new_article',{errorMessage : 2});
 		}
 });
 

@@ -1,0 +1,117 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Search</title>
+  <meta charset="utf-8">
+<meta name="description" content="The HTML5 Herald">
+<meta name="author" content="SitePoint">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script src="/javascripts/main.js"></script>
+
+<link href='/stylesheets/style.css' type="text/css" rel="stylesheet">
+
+<script src="/javascripts/onstart.js"></script>
+
+</head>
+
+<body>
+<div>
+      <div class="logblock" id="logb">
+
+
+        <ul class="nav navbar-nav navbar-right">
+          <% if (!user) { %>
+                        <li><a href = '/register'><span class="glyphicon glyphicon-user"></span> Sign in</a></li>
+                        <li><a href = '/login'><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <% } else { %>
+                      <li><a href = '/logout' style="pointer-events: none;  cursor: default;  color: #000000;"><%= user.username%></a></li>
+                      <li><a href = '/logout'><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                      <li><a href = '/user_profile'><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+                    <% } %>
+</ul>
+
+     </div>
+   </div>
+
+
+     <div class="mainimage" id="log2">
+         <img src='/images/books.png' width=150 height=110 alt="Books"/></br></br><br>
+         <a href = '/'><p class="p1">Main page</p></a>
+
+         <a href = '/articles'><p class="p1">Article list</p></a>
+         <hr>
+       <p class="p1">  Participation</p>
+
+          <% if (!user) { %>
+     <p class="p2">Login first.</p>
+                    <% } else { %>
+                        <a href = '/new_article'><p class="p2">Create article</p></a>
+
+                    <% } %>
+
+
+         Search:<br>
+
+         <form action='/search' class="input-group" method='GET' id="search_form">
+           <div class="input-group">
+           <input type="text" placeholder="Search" class="form-control input-sm" name="search"  id="search">
+             <div class="input-group-btn">
+               <button class="btn btn-default btn-sm" type="submit">
+                 <i class="glyphicon glyphicon-search"></i>
+               </button>
+               </div>
+             </div>
+             <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+
+           </form>
+
+
+
+
+
+     </div>
+
+     <div class="profiletext" id="logb2">
+
+
+	<div class="col-lg-12">
+      <input	type="search"	class="form-control"	placeholder="Search..." id="search">
+	    </div>
+      <br />
+      <br />
+       Searching results:
+        <br />
+	      <br />
+	      <div class="col-lg-12"  id="results">
+          <% if (articles.length === 0) { %>
+            <div class="panel panel-warning">
+              <div class="panel-body">No matches were found for your query.</div>
+	          </div>
+	        <%	}	else	{ %>
+            <% for(var c = 0; c < articles.length; c++) { %>
+                <div class="panel panel-default">
+                <div class="panel-heading"><a href="<%= articles[c].address %>"><%= articles[c].aname %></a></div>
+
+	            </div>
+
+
+	<% } %>
+	<% }	%>
+	</div>
+
+
+
+
+
+
+</div>
+
+<script src="/javascripts/check.js"></script>
+<script src="/javascripts/search.js"></script>
+</body>
+</html>

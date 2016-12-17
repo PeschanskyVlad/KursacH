@@ -1,0 +1,131 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Creator</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+  <link href='/stylesheets/style.css' type="text/css" rel="stylesheet">
+
+<script src="/javascripts/onstart.js"></script>
+
+</head>
+
+<body>
+  <div>
+        <div class="logblock" id="logb">
+
+
+          <ul class="nav navbar-nav navbar-right">
+            <% if (!user) { %>
+                          <li><a href = '/register'><span class="glyphicon glyphicon-user"></span> Sign in</a></li>
+                          <li><a href = '/login'><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                      <% } else { %>
+                        <li><a href = '/logout' style="pointer-events: none;  cursor: default;  color: #000000;"><%= user.username%></a></li>
+                        <li><a href = '/logout'><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                        <li><a href = '/user_profile'><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+                      <% } %>
+  </ul>
+
+       </div>
+     </div>
+
+  <div>
+       <div class="mainimage" id="log2">
+           <img src='/images/books.png' width=150 height=110 alt="Books"/></br></br><br>
+           <a href = '/'><p class="p1">Main page</p></a>
+
+           <a href = '/articles'><p class="p1">Article list</p></a>
+           <hr>
+         <p class="p1">  Participation</p>
+
+            <% if (!user) { %>
+       <p class="p2">Login first.</p>
+                      <% } else { %>
+                          <a href = '/new_article'><p class="p2">Create article</p></a>
+
+                      <% } %>
+
+           Search:<br>
+
+           <form action='/search' class="input-group" method='GET' id="search_form">
+             <div class="input-group">
+             <input type="text" placeholder="Search" class="form-control input-sm" name="search"  id="search">
+               <div class="input-group-btn">
+                 <button class="btn btn-default btn-sm" type="submit">
+                   <i class="glyphicon glyphicon-search"></i>
+                 </button>
+                 </div>
+               </div>
+               <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+
+             </form>
+       </div>
+
+
+       <div class="profiletext" id="logb2" style="height : 88%;">
+         <h3 align="center"><%= user.username%>,&nbsp you went to the post edit page.</h3>
+          <p align="center">Thank you, for assistance in site development.</p>
+          <hr>
+          <br>
+          Here you can edit the article data.
+          <br>
+    <form action='/update_article<%=ar.address%>' method='POST' enctype="multipart/form-data" class="input-group" id="newa">
+      <br>
+      Title:
+      <br/>
+      <div class="form-group has-feedback atitleBlock">
+      <input type='text' name='atitle' disabled="disabled" class="form-control" id="atitle" value="<%=ar.aname%>" aria-describedby="inputSuccess2Status"/>
+    </div>
+ &nbsp<br>
+  &nbsp<br>
+
+      Category:
+      <br/>
+      <div class="form-group has-feedback acategoryBlock">
+      <input type='text' name='acategory' class="form-control" value="<%=ar.acategory%>" id="acategory" aria-describedby="inputSuccess2Status"/>
+    </div>
+ &nbsp<br>
+  &nbsp<br>
+
+      Article summary:
+      <br/>
+      <div class="form-group has-feedback asummaryBlock">
+      <textarea rows="5" cols="100" style="resize: none; " name="asummary"  class="form-control" id="asummary" aria-describedby="inputSuccess2Status"><%=ar.asummary%></textarea>
+    </div>
+       &nbsp<br>
+         &nbsp<br>
+      Article text:
+      <br/>
+      <div class="form-group has-feedback atextBlock">
+      <textarea rows="10" cols="100" name="atext" style="resize: none; " class="form-control" id="atext" aria-describedby="inputSuccess2Status"><%=ar.atext%></textarea>
+    </div>
+   &nbsp<br>
+    &nbsp<br>
+
+    Article image:
+    <br/>
+    <input type='file' name='image'  style="border: none; margin: 0;"  accept="image/*" />
+    <br />
+
+    <br /><br />
+
+      <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+      <input type="submit" value='Update article.' />
+    </form>
+       </div>
+       <div>
+<script src="/javascripts/new_article.js"></script>
+<script src="/javascripts/check.js"></script>
+</body>
+</html>
