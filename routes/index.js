@@ -105,24 +105,10 @@ router.get('/new_article', function(req, res, next) {
 				console.log('Error.');
 			}else{
 
-				var tempArr = [];
-
-				var row='';
-				for (var i in articles) {
-
-					if(tempArr.indexOf(articles[i].acategory)==-1){
-						 row+= articles[i].acategory+',';
-					 }
 
 
-						 tempArr[i] = articles[i].acategory;
-					 };
 
-
-						 row = row.slice(0, -1);
-
-
-					res.render('new_article', {user : req.user, categorys : row, csrfToken : req.csrfToken(), errorMessage:0});
+					res.render('new_article', {user : req.user, articles : articles,  csrfToken : req.csrfToken(), errorMessage:0});
 			}
 
 	})
@@ -214,8 +200,21 @@ router.get('/update_article/articles/:title', function(req,res){
 		if(err){res.send('err occured');}
 		if(article){
 			if(req.user.username == article.autor||req.user.admin==true){
-			//console.log(article);
-			res.render('update_article', {csrfToken : req.csrfToken() , user : req.user, ar : article});
+
+				ArticleTemplate.find({},{acategory : true, _id : false}).exec(
+					function(err,articles){
+						if(err){
+							console.log('Error.');
+						}else{
+
+
+
+
+								res.render('update_article', {user : req.user, articles : articles,ar : article,  csrfToken : req.csrfToken(), errorMessage:0});
+						}
+
+				})
+
 		} else {res.end('Nope');}
 		}else{
 			res.send('Not found');
@@ -290,12 +289,7 @@ router.get('/article_success', (req, res) => {
 router.post('/update_article/articles/:title',(req,res) =>{
 
 var temp = '/articles/'+ req.params.title;
-//console.log("Update!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111");
 
-//console.log(req.body.atitle);
-//console.log(req.body.acategory);
-//console.log(req.body.asummary);
-//console.log(req.body.atext);
 
 	if(req.body.acategory){
 
@@ -390,10 +384,10 @@ router.get('/searching', function(req, res){
 
 
 
-router.get('/about', function(req, res){
+//router.get('/about', function(req, res){
 
-	   res.render('about',{user : req.user , csrfToken : req.csrfToken()});
-});
+	  // res.render('about',{user : req.user , csrfToken : req.csrfToken()});
+//});
 
 
 
@@ -403,12 +397,32 @@ router.post('/new_article',(req,res) =>{
 
 	if(req.body.atitle&&req.body.acategory){
 		//	console.log('Here2');
-
-			ArticleTemplate.findOne({aname : req.body.atitle},function(err,article){
+		ArticleTemplate.findOne({aname : req.body.atitle},function(err,article){
 			if(err) return next(err);
+
 			if(article){
-			res.redirect('/new_article', {errorMessage : 1});
-		}else{
+
+
+
+				if(req.user){
+
+				ArticleTemplate.find({},{acategory : true, _id : false}).exec(
+					function(err,articles){
+						if(err){
+							console.log('Error.');
+						}else{
+
+
+
+
+								res.render('new_article', {user : req.user, articles : articles,  csrfToken : req.csrfToken(), errorMessage:1});
+						}
+
+				})
+			 } else {res.end('Nope');}
+
+
+			}else{
 
 			var aObj = req.files.image;
 			var base64String = aObj.data.toString('base64');
@@ -446,7 +460,22 @@ router.post('/new_article',(req,res) =>{
 		}
 			})
 		}else{
-			res.redirect('/new_article',{errorMessage : 2});
+			if(req.user){
+
+			ArticleTemplate.find({},{acategory : true, _id : false}).exec(
+				function(err,articles){
+					if(err){
+						console.log('Error.');
+					}else{
+
+
+
+
+							res.render('new_article', {user : req.user, articles : articles,  csrfToken : req.csrfToken(), errorMessage:2});
+					}
+
+			})
+		 } else {res.end('Nope');}
 		}
 });
 
@@ -461,7 +490,7 @@ if(req.body.username&&req.body.email&&req.body.password&&
 			if(err) return next(err);
 
 			if(user){
-			res.end("Such username exists " + JSON.stringify(user));
+			  res.render('register',{csrfToken : req.csrfToken() , errorMessage : 2 });
 			}else{
 
 

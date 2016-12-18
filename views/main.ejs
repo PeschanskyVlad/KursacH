@@ -1,113 +1,95 @@
-
+<!doctype html>
 
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-
   <title>Main</title>
+
   <meta charset="utf-8">
-<meta name="description" content="The HTML5 Herald">
-<meta name="author" content="SitePoint">
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link  href='/stylesheets/style.css' type="text/css" rel="stylesheet">
   <script href="../node_modules/ejs/ejs.js"></script>
-
-
-<script src="/javascripts/main.js"></script>
-
-<link href='/stylesheets/style.css' type="text/css" rel="stylesheet">
-
-<script src="/javascripts/onstart.js"></script>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../dist/css/jasny-bootstrap.min.css" rel="stylesheet">
+<script type="text/javascript" src="javascripts/bootstrap-filestyle.min.js"> </script>
 
 </head>
-
 <body>
-<div>
-      <div class="logblock" id="logb">
+
+   <header>
+  <nav class="navbar navbar-fixed-top navbar-default">
+     <div class="container-fluid">
+          <div class="navbar-header">
+
+            <a class="navbar-brand" href="/">Kursachepedia</a>
+          </div>
+
+          <div class="navbar-offcanvas offcanvas">
+
+            <ul class="nav navbar-nav">
+              <li><a href = '/articles'><span class="glyphicon glyphicon-list"></span> Article list</a></li>
+
+              <% if (!user) { %>
+              <li><a href = '/new_article' style="pointer-events: none;  cursor: default;"><span class="glyphicon glyphicon-plus"></span> Create article</a></li>
+                <% } else { %>
+              <li><a href = '/new_article'><span class="glyphicon glyphicon-plus"></span> Create article</a></li>
+               <% } %>
 
 
-        <ul class="nav navbar-nav navbar-right">
+            </ul>
+
+            <form action='/search' method='GET' class="navbar-form navbar-left" id="search_form">
+         <div class="input-group">
+           <input type="text" class="form-control input-sm" placeholder="Search" id="search" name="search">
+             <div class="input-group-btn">
+               <button class="btn btn-default btn-sm" type="submit">
+                 <i class="glyphicon glyphicon-search"></i>
+               </button>
+             </div>
+           </div>
+           <input type="hidden" name="_csrf" value=<%=csrfToken%>>
+          </form>
+
+          <ul class="nav navbar-nav navbar-right">
           <% if (!user) { %>
                         <li><a href = '/register'><span class="glyphicon glyphicon-user"></span> Sign in</a></li>
-                        <li><a href = '/login'><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                        <li><a id="login" href = '/login'><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                     <% } else { %>
-                        <li><a href = '/logout' style="pointer-events: none;  cursor: default;  color: #000000;"><%= user.username%></a></li>
+                        <li><a href = '/logout' style="pointer-events: none;  cursor: default"><%= user.username%></a></li>
                         <li><a href = '/logout'><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                         <li><a href = '/user_profile'><span class="glyphicon glyphicon-user"></span> Profile</a></li>
                     <% } %>
-</ul>
-
-     </div>
-   </div>
-
-<div>
-     <div class="mainimage" id="log2">
-         <img src='/images/books.png' width=150 height=110 alt="Books"/></br></br><br>
-         <a href = '/'><p class="p1">Main page</p></a>
-
-         <a href = '/articles'><p class="p1">Article list</p></a>
-         <hr>
-       <p class="p1">  Participation</p>
-
-          <% if (!user) { %>
-     <p class="p2">Login first.</p>
-                    <% } else { %>
-                        <a href = '/new_article'><p class="p2">Create article</p></a>
-                    <% } %>
+        </ul>
 
 
 
-
-
-             Search:<br>
-
-             <form action='/search' class="input-group" method='GET' id="search_form">
-               <div class="input-group">
-               <input type="text" placeholder="Search" class="form-control input-sm" name="search"  id="search">
-
-
-                   <button class="btn btn-default btn-sm" type="submit">
-                     <i class="glyphicon glyphicon-search"></i>
-                   </button>
-
-
-
-
-                 </div>
-                 <input type="hidden" name="_csrf" value="<%=csrfToken%>">
-
-               </form>
-
-
-
-
-     </div>
-
-     <div class="profiletext" id="logb2" style="height : 87%;">
-       <h3 align="center">Welcome, user!</h3>
-       <br>
-       <br>
-       <br>
-      <div class="profiletext2">
-
-       <h3 align="">Kursachepedia main page</h3>
-       Kursachepedia - information platform, where users can try to find material <br>
-       of interest to them or assist to develop the project adding new articles.
-       <br>Remember that only you and administrator can edit yours materials .
-        <br>
-        <br>
-        <br>
-        <br>
-      <img src='/images/cat.png' class="round" width=600 height=270 alt="cat" /><br>
-
+          </div><!--/.nav-collapse -->
         </div>
+        </nav>
+ </header>
+
+
+
+
+
+  <div class='container' style="margin-top : 20px;">
+    <div class="jumbotron col-lg-12 text-center " >
+
+
+      Offcanvas Navbar example
+
+      This example demonstrates using the offcanvas plugin with the navbar.
+
     </div>
 
+  </div>
 
-<script src="/javascripts/search.js"></script>
-<script src="/javascripts/check.js"></script>
+  <script src="/javascripts/check.js"></script>
+
+
 </body>
+</html>
