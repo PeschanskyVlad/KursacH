@@ -7,13 +7,15 @@ $(document).ready(function(){
 
   $("form").submit(function(event){
     event.preventDefault();
+    var pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
 
     var username = $("#username").val();
     var email = $("#email").val();
     var password = $("#password").val();
     var password2 = $("#password2").val();
 
-    if(username == "") {
+    if(username == ""|| username.length > 18) {
       $("#username").parent().removeClass("has-success").addClass("has-error");
       $(".usernameBlock").append("<span class='glyphicon glyphicon-remove form-control-feedback' aria-hidden='true'></span>");
       $(".usernameBlock .glyphicon-ok").remove();
@@ -25,7 +27,7 @@ $(document).ready(function(){
       validName = true;
     }
 
-    if(email == "") {
+    if(email == ""|| email.search(pattern) != 0) {
       $("#email").parent().removeClass("has-success").addClass("has-error");
       $(".emailBlock").append("<span class='glyphicon glyphicon-remove form-control-feedback' aria-hidden='true'></span>");
       $(".emailBlock .glyphicon-ok").remove();

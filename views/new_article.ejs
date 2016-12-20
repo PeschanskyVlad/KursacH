@@ -100,18 +100,20 @@
 
   <div class='container' style="margin-top : 20px;">
     <div class="jumbotron col-lg-12"  >
+      <div class="Lists">
       <h2 align="center">Welcome <%= user.username%>!</h2>
       <p align="center">Thank you, for assistance in site development.</p>
-      <hr>
+    </div>
 <br>
 <br>
     <div class="jumbotron col-lg-7">
+      <div class="Lists">
       <form action='/new_article' method='POST' enctype="multipart/form-data" class="input-group" id="newa">
 
 
       <div class="form-group  has-feedback atitle">
         <label for="atitle">Title</label>
-      <input type='text' name='atitle' class="form-control"  id="atitle" aria-describedby="inputSuccess2Status"/>
+      <input type='text' name='atitle' class="form-control" style="background-color: #FFFFFF;"  id="atitle" aria-describedby="inputSuccess2Status"/>
     </div>
 
     <div class="form-group articlecontainer has-feedback " id="1" >
@@ -204,6 +206,7 @@
       <input type="hidden" name="_csrf" value="<%=csrfToken%>">
       <input type="submit" class="btn btn-primary" value='Create article.' />
     </form>
+  </div>
 
 
 </div>

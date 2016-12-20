@@ -112,7 +112,8 @@
 <br>
 <br>
     <div class="jumbotron col-lg-7">
-      <form action='/new_article' method='POST' enctype="multipart/form-data" class="input-group" id="newa">
+        <div class="Lists">
+      <form action='/update_article<%=ar.address%>' method='POST' enctype="multipart/form-data" class="input-group" id="newa">
 
 
       <div class="form-group  has-feedback atitle">
@@ -139,7 +140,7 @@
     <div class="form-group  has-feedback category">
       <label for="category"><br>Existing categories<br/></label>
       <br>
-    <select id="category" name = "category" class="selectpicker" title='<%=ar.acategory%>'>
+    <select id="category" name = "category" class="selectpicker" value='<%=ar.acategory%>'>
       <%for (var i in articles) {
         if(tempArr.indexOf(articles[i].acategory)==-1){%>
         <option value="<%=articles[i].acategory%>"><%=articles[i].acategory%></option>
@@ -159,7 +160,7 @@
 
       <div class="form-group  has-feedback acategory">
         <label for="acategory">Category</label>
-      <input type='text' name='acategory' value="<%=ar.acategory%>" class="form-control" id="acategory" aria-describedby="inputSuccess2Status"/>
+      <input type='text' name='acategory' class="form-control" id="acategory" aria-describedby="inputSuccess2Status"/>
     </div>
 
     <div class="form-group articlecontainer has-feedback " id="2" >
@@ -208,6 +209,7 @@
       <input type="hidden" name="_csrf" value="<%=csrfToken%>">
       <input type="submit" class="btn btn-primary" value='Update article.' />
     </form>
+  </div>
 
 
 </div>

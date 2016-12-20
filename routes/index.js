@@ -119,10 +119,10 @@ router.get('/articles', function(req,res,next){
 	ArticleTemplate.find({})
 	.exec(function(err,articles){
 		if(err){res.send('err');}else{
-
+var list="";
 
 			//So long function, wow
-			/*
+/*
 			var list="";
 			var tempArr = [];
 		  var ABC = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","S","Y","Z"];
@@ -149,11 +149,11 @@ router.get('/articles', function(req,res,next){
 		 			}
 		 		 };
 		 list+= " <hr>";
-	 }*/
-
+	 }
+*/
 			//finally
 
-			res.render('articles', {csrfToken : req.csrfToken() , user : req.user, ar : articles});
+			res.render('articles', {csrfToken : req.csrfToken() , user : req.user, ar : articles, aList : list});
 		}
 
 	})
@@ -311,7 +311,9 @@ var temp = '/articles/'+ req.params.title;
 								console.log('Update error!');
 							}else{
 								console.log('Update success!');
+
 								res.redirect(temp);
+
 							}
 						}
 					)
@@ -367,16 +369,15 @@ router.get('/search', function(req, res){
 
 router.get('/searching', function(req, res){
 
-
-
 		 ArticleTemplate.find({"aname" :  new RegExp(req.query.search, 'i') }).exec((err, articles) => {
-			 console.log('Here2');
+
+			console.log('Here2');
 			 if(!err) {
-				 console.log('Yep');
+				 //console.log('Yep');
 				 	res.send(JSON.stringify(articles));
 
 			 } else {
-				  console.log('Nope');
+				  //console.log('Nope');
 				 res.send(JSON.stringify(err));
 			 }
 	});

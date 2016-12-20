@@ -34,9 +34,7 @@ var Article = new Schema({
       type : String,
       required : true,
     },
-    arating : {
-      type : Number,
-    },
+
     image : {
       type : String
     },
